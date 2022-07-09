@@ -284,15 +284,3 @@ while expression_true:
 	else:
 
 		cycle_counter += 1
-
-
-
-
-
-
-
-
-
-
-
-
