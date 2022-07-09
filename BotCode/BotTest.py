@@ -239,7 +239,17 @@ while expression_true:
 
 	flag_check = False
 
-	while not flag_check :
+	can_trash = []
+
+	for user_card in main_user_hand:
+		can_trash.append(check_table(table, user_card))
+
+	if True not in can_trash:
+		print('[!] User have not cards to trash table\n')
+		continue
+
+
+	while not flag_check:
 		card_throw = main_user_hand[int(input(('Choose card: '))) - 1]
 
 		
@@ -260,12 +270,6 @@ while expression_true:
 			table.append(card_throw)
 		else:
 			print(f'\n\n[!] Check table is False')
-
-
-
-
-
-
 
 
 	'''print(f'\nCards remained in deck: \n')
