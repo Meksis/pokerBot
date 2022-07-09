@@ -32,12 +32,18 @@ def hand_gen(hand_inp):
 
 			if dict_value == []:
 				for card_suit_check in cards_deck:
-					if cards_deck[card_suit_check] == []:
-						pass
+					if cards_deck[card_suit_check] != []:
+						dict_value_ = cards_deck[card_suit_check]
 
-					else:
-						dict_value = cards_deck[card_suit_check]
+						'''print(f'prev vals: {card_suit}, {dict_value}\nnew vals: {card_suit_check}, {dict_value_}\n')
+																		
+																								for i in cards_deck:
+																									print(f'{i} {cards_deck[i]}')'''
+
+						card_suit = card_suit_check
+						dict_value = dict_value_
 						break
+
 
 			if dict_value == []:
 				return(hand_inp)
@@ -46,24 +52,15 @@ def hand_gen(hand_inp):
 
 			card = f'{card_suit}__{card_num}'
 
-			#print(f'\n{card_suit}, {card_num}, {dict_value[ : dict_value.index(card_num)]}, {dict_value[ dict_value.index(card_num) + 1 : ]}, {dict_value[ : dict_value.index(card_num)] + dict_value[ dict_value.index(card_num) + 1 : ]}')
-
-			
-
-			print(f'{card_suit}, {card_num}, {dict_value}')
-
-			dict_value.remove(card_num)
-
-			cards_deck.update( card_suit = dict_value )
-
-			for card_suit in cards_deck:
-				print(f'\n{card_suit} - {cards_deck[card_suit]}')
+			#print(card)
 
 
+			val_copy = dict_value.copy()
 
-			#cards_deck.update(card_suit = dict_value[ : dict_value.index(card_num)] + dict_value[ dict_value.index(card_num) + 1 : ])
+			val_copy.remove(card_num)
 
-			#cards_deck.update({card_suit : dict_value[ : dict_value.index(card_num)] + dict_value[ dict_value.index(card_num) + 1 : ]})
+			cards_deck[card_suit] = val_copy
+
 			hand_inp.append(card)
 
 
@@ -139,7 +136,7 @@ cards_all = {'\u2663' : cards_base, '\u2660' : cards_base, '\u2665' : cards_base
 for hand_num in range(players):
 	hands.append(hand_gen([]))
 
-print(f'hands - {hands}\n\n')
+#print(f'hands - {hands}\n\n')
 
 
 
@@ -201,6 +198,8 @@ while len(hands[0]) != 0 or len(hands[1]) != 0:									# Позже перед�
 
 	if True not in can_trash:	
 		print(f'[!] User have not cards to trash table and grabed cards\n{"=="*10}')	
+
+		print(table)
 
 		main_user_hand.append(table[0])
 		main_user_hand.sort()

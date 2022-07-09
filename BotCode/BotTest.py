@@ -1,6 +1,6 @@
 from random import randint
 
-deck_size = 36
+deck_size = 16
 prem_cards = 16
 players = 2
 test_amount = 4 
@@ -44,10 +44,21 @@ def hand_gen(hand_inp):
 
 			card_num = dict_value[randint(0, len(dict_value) - 1)]
 
+			#print(f'\n{card_suit}, {card_num}, {dict_value[ : dict_value.index(card_num)]}, {dict_value[ dict_value.index(card_num) + 1 : ]}, {dict_value[ : dict_value.index(card_num)] + dict_value[ dict_value.index(card_num) + 1 : ]}')
+			
+			print(f'dict_value - {dict_value}')
+			print(f'card_suit - {card_suit}')
+			print(f'card_num - {card_num}')
+
+
+			'''cards_deck.update( card_suit = dict_value )
+
 			card = f'{card_suit}__{card_num}'
 
 
-			cards_deck.update({card_suit : dict_value[ : dict_value.index(card_num)] + dict_value[ dict_value.index(card_num) + 1 : ]})
+			for card_suit in cards_deck:
+				print(f'\n{card_suit} - {cards_deck[card_suit]}')'''
+
 			hand_inp.append(card)
 
 
@@ -115,6 +126,7 @@ cards_base = cards_numeric[ card_min -2  : ] + cards_peoples
 
 #колода для игры (меняется)
 cards_deck = {'\u2663' : cards_base,  '\u2660' : cards_base,  '\u2665' : cards_base,  '\u2666' : cards_base}
+
 #список карт для игры(не меняется) 
 cards_all = {'\u2663' : cards_base, '\u2660' : cards_base, '\u2665' : cards_base, '\u2666' : cards_base}
 
@@ -122,17 +134,28 @@ cards_all = {'\u2663' : cards_base, '\u2660' : cards_base, '\u2665' : cards_base
 for hand_num in range(players):
 	hands.append(hand_gen([]))
 
+print(f'hands - {hands}\n\n')
+
+
+
 #определение козыря
 trump = list(cards_deck.keys())[randint(0, 3)]
-print(f'\n[!]Trump - {trump}\n')
+
 
 
 #логика игры
-while expression_true:
+while len(hands[0]) != 0 or len(hands[1]) != 0:									# Позже переделать. Приложить карту к козырю
 
 	for hand_counter, hand in enumerate(hands):
 		hands.pop(hand_counter)
 		hands.insert(hand_counter, hand_gen(hand))
+
+	print(f'hands - {hands}\n\n')
+
+
+	for card_suit in cards_deck:
+		print(f'\n{card_suit} - {cards_deck[card_suit]}')
+
 
 	table = []
 
@@ -142,16 +165,25 @@ while expression_true:
 
 	for hand_id in range(1, players):
 		hand = hands[hand_id]
-		card_throw = hand[randint(0, len(hand) - 1)]
+		if len(hand) > 1:
 
-		hand.remove(card_throw)
-		hands[hand_id] = hand
+			card_throw = hand[randint(0, len(hand) - 1)]
 
-		print(f'''\nhand_{hand_id} throwed "{card_throw}"''')
+			hand.remove(card_throw)
+			hands[hand_id] = hand
 
-		table.append(card_throw)
+			print(f'''\nhand_{hand_id} throwed "{card_throw}"''')
 
-	print(f'\n\n[!] Table cards now - {table}\n\n')
+			table.append(card_throw)
+
+
+	cards_counter = 0
+	for card_suit in cards_deck:
+		cards_counter += len(cards_deck[card_suit])
+
+	print(f'\n[!]Trump - {trump}')
+
+	print(f'\n[!] Table cards now - {table}, cards remained in deck - {cards_counter}\n\n')
 
 	print(f'Our hand is {main_user_hand}')
 
@@ -163,7 +195,7 @@ while expression_true:
 		can_trash.append(check_table(table, user_card))
 
 	if True not in can_trash:	
-		print('[!] User have not cards to trash table and grabed cards\n')	
+		print(f'[!] User have not cards to trash table and grabed cards\n{"=="*10}')	
 
 		main_user_hand.append(table[0])
 		main_user_hand.sort()
@@ -208,15 +240,18 @@ while expression_true:
 			else:
 				print(f'\n\n[!] Cant trash via this card')
 
+
+
+
 	print('\n\n','=='*10)
 
 
 
 
-	if cycle_counter == test_amount:
-		print(f'\n\n[!] TRASH CARDS IS {trash_cards}')
-		break
-
-	else:
-
-		cycle_counter += 1
+	'''if cycle_counter == test_amount:
+					print(f'\n\n[!] TRASH CARDS IS {trash_cards}')
+					break
+			
+				else:
+			
+					cycle_counter += 1'''
