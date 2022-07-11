@@ -143,10 +143,11 @@ for hand_num in range(players):
 #определение козыря
 trump = list(cards_deck.keys())[randint(0, 3)]
 
-
+winner = 10
 
 #логика игры
-while len(hands[0]) != 0 or len(hands[1]) != 0:									# Позже переделать. Приложить карту к козырю
+while winner == 10:
+	last_hand_throwed = 0									# Позже переделать. Приложить карту к козырю
 
 	for hand_counter, hand in enumerate(hands):
 		hands.pop(hand_counter)
@@ -177,6 +178,19 @@ while len(hands[0]) != 0 or len(hands[1]) != 0:									# Позже перед�
 			print(f'''\nhand_{hand_id} throwed "{card_throw}"''')
 
 			table.append(card_throw)
+		else:
+			
+			winner = hand_id
+			
+			card_throw = hand[0]
+
+			hand.remove(card_throw)
+			hands[hand_id] = hand
+
+			print(f'''\nhand_{hand_id} throwed "{card_throw}"''')
+
+			table.append(card_throw)
+		
 
 
 	cards_counter = 0
@@ -248,14 +262,7 @@ while len(hands[0]) != 0 or len(hands[1]) != 0:									# Позже перед�
 
 
 	print('\n\n','=='*10)
-
-
-
-
-	'''if cycle_counter == test_amount:
-					print(f'\n\n[!] TRASH CARDS IS {trash_cards}')
-					break
-			
-				else:
-			
-					cycle_counter += 1'''
+	
+	
+	
+print(f"\n\nWINNER IS A PLAYER {winner+1}")
